@@ -33,19 +33,19 @@ const fileFilter = (
   }
 };
 
-export const upload = multer({
-  fileFilter,
-  storage: multerS3({
-    s3: s3,
-    bucket: AWS_BUCKET_NAME || "your-bucket-name",
-    acl: "public-read",
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key: function (req, file, cb) {
-      const fileName = `${Date.now().toString()}-${file.originalname}`;
-      cb(null, fileName);
-    },
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 },
-});
+// export const upload = multer({
+//   fileFilter,
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: AWS_BUCKET_NAME || "your-bucket-name",
+//     acl: "public-read",
+//     metadata: function (req, file, cb) {
+//       cb(null, { fieldName: file.fieldname });
+//     },
+//     key: function (req, file, cb) {
+//       const fileName = `${Date.now().toString()}-${file.originalname}`;
+//       cb(null, fileName);
+//     },
+//   }),
+//   limits: { fileSize: 5 * 1024 * 1024 },
+// });

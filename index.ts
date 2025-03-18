@@ -4,6 +4,7 @@ import cors from "cors";
 import morgan from "morgan";
 import { PORT, MONGODB_URI } from "./config/config";
 import authRoutes from "./routes/authRoutes";
+import problemRoutes from "./routes/problemRoutes";
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
+app.use("/api", problemRoutes);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
