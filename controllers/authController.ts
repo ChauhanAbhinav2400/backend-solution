@@ -98,9 +98,11 @@ export const signup = async (
             coinsEarnedByReferal: 10,
           },
           $push: {
-            myReferalList: {
+            myreferalList: {
               name: fullName,
+              email: email,
               profession: profession,
+              joinedDate: new Date().toISOString(),
             },
           },
         });
@@ -382,53 +384,53 @@ export const getProfile = async (
 };
 
 // Update profile controller
-// export const updateProfile = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ): Promise<void> => {
-//   try {
-//     const userId = req.userId; // From auth middleware
-//     const { fullName, field, profession } = req.body;
+export const updateProfile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const userId = req.userId; // From auth middleware
+    const { fullName, field, profession } = req.body;
 
-//     // Find user by ID
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       res.status(404).json({ success: false, message: "User not found" });
-//       return;
-//     }
+    // Find user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ success: false, message: "User not found" });
+      return;
+    }
 
-//     // Update user profile
-//     if (fullName) user.fullName = fullName;
-//     if (field) user.field = field;
-//     if (profession) user.profession = profession;
+    // Update user profile
+    if (fullName) user.fullName = fullName;
+    if (field) user.field = field;
+    if (profession) user.profession = profession;
 
-//     // If profile picture is uploaded via multer, update it
-//     if (req.file) {
-//       user.profilePicture = req.file.location; // S3 URL from multer
-//     }
+    // If profile picture is uploaded via multer, update it
+    // if (req.file) {
+    //   user.profilePicture = req.file.location; // S3 URL from multer
+    // }
 
-//     await user.save();
+    await user.save();
 
-//     res.status(200).json({
-//       success: true,
-//       message: "Profile updated successfully",
-//       data: {
-//         userId: user._id,
-//         fullName: user.fullName,
-//         email: user.email,
-//         field: user.field,
-//         profession: user.profession,
-//         profilePicture: user.profilePicture,
-//       },
-//     });
-//   } catch (error: any) {
-//     console.error("Update profile error:", error);
-//     res
-//       .status(500)
-//       .json({ success: false, message: "Server error", error: error.message });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: {
+        userId: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        field: user.field,
+        profession: user.profession,
+        profilePicture: user.profilePicture,
+      },
+    });
+  } catch (error: any) {
+    console.error("Update profile error:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error", error: error.message });
+  }
+};
 
 // Resend OTP controller
 export const resendOTP = async (

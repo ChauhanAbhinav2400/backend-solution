@@ -82,7 +82,9 @@ const userSchema = new Schema<IUser>(
     myreferalList: [
       {
         name: String,
+        email: String,
         profession: String,
+        joinedDate: Date,
       },
     ],
     isVerified: {
