@@ -2,9 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
-import { PORT, MONGODB_URI } from "./config/config";
-import authRoutes from "./routes/authRoutes";
-import problemRoutes from "./routes/problemRoutes";
+import { PORT, MONGODB_URI } from "./src/config/config";
+import authRoutes from "./src/routes/authRoutes";
+import problemRoutes from "./src/routes/problemRoutes";
 
 const app = express();
 
