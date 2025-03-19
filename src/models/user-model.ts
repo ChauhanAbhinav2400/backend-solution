@@ -1,26 +1,8 @@
 import mongoose, { Document, Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import { IUser } from "../types/model.types";
 
-export interface IUser extends Document {
-  fullName: string;
-  email: string;
-  password: string;
-  field: string;
-  profession: string;
-  walletCoins: number;
-  myreferalCode: string;
-  referedBy?: string;
-  referalCount: number;
-  coinsEarnedByLikes: number;
-  coinsEarnedByReferal: number;
-  coinsEarnedByComments: number;
-  myreferalList: Array<{ name: string; profession: string }>;
-  isVerified: boolean;
-  otp?: string;
-  otpExpiry?: Date;
-  profilePicture?: string;
-  comparePassword(candidatePassword: string): Promise<boolean>;
-}
+
 
 const userSchema = new Schema<IUser>(
   {

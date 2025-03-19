@@ -1,21 +1,6 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { IProblem } from "../types/model.types";
 
-export interface IProblem extends Document {
-  title: string;
-  field: string;
-  detailDescription: string;
-  poster: mongoose.Types.ObjectId;
-  posterName: string;
-  posterProfession: string;
-  likes: number;
-  dislikes: number;
-  score: number;
-  commentsCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-  likedBy: mongoose.Types.ObjectId[];
-  dislikedBy: mongoose.Types.ObjectId[];
-}
 
 const problemSchema = new Schema<IProblem>(
   {
