@@ -9,7 +9,7 @@ import {
   getProfile,
   updateProfile,
   resendOTP,
-} from "../controllers/authController";
+} from "../modules/auth/auth.controller";
 import { authMiddleware } from "../middlewares/authMiddleware";
 // import { upload } from "../middlewares/uploadMiddleware";
 

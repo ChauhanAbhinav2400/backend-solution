@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
 import { PORT, MONGODB_URI } from "./src/config/config";
-import authRoutes from "./src/routes/authRoutes";
-import problemRoutes from "./src/routes/problemRoutes";
+import authRoutes from "./src/routes/auth.route.";
+import problemRoutes from "./src/routes/problem.route";
 
 const app = express();
 

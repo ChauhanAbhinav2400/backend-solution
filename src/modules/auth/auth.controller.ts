@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/user-model";
+import User from "../../models/user-model";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { generateOTP, generateReferralCode } from "../helpers/utils";
-import { JWT_SECRET, EMAIL_CONFIG } from "../config/config";
+
+import { JWT_SECRET, EMAIL_CONFIG } from "../../config/config";
+import { generateOTP } from "../../utils/generate-otp";
+import { generateReferralCode } from "../../utils/generate-referral";
 
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
