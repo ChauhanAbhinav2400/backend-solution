@@ -41,7 +41,7 @@ const sendOtpEmail = async (email: string, otp: string) => {
 
 // Generate JWT token
 const generateToken = (userId: string): string => {
-  return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: "24h" });
+  return jwt.sign({ id: userId }, JWT_SECRET as string, { expiresIn: "24h" });
 };
 
 // Signup controller
