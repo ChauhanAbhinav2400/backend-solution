@@ -10,7 +10,7 @@ import {
   updateProfile,
   resendOTP,
 } from "../modules/auth/auth.controller";
-import { authMiddleware } from "../middlewares/authMiddleware";
+import { authMiddleware } from "../middlewares/auth";
 // import { upload } from "../middlewares/uploadMiddleware";
 
 const router = express.Router();
