@@ -2,9 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import morgan from "morgan";
-import { PORT, MONGODB_URI } from "./src/config/config";
-import authRoutes from "./src/routes/auth.route.";
-import problemRoutes from "./src/routes/problem.route";
+import { PORT, MONGODB_URI } from "./config/config";
+import authRoutes from "./routes/auth.route.";
+import problemRoutes from "./routes/problem.route";
 
 const app = express();
 
@@ -53,7 +53,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI as string)
   .then(() => {
     console.log("Connected to mongoDB");
     app.listen(PORT, () => {

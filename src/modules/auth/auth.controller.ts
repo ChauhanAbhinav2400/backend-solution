@@ -7,7 +7,6 @@ import { JWT_SECRET, EMAIL_CONFIG } from "../../config/config";
 import { generateOTP } from "../../utils/generate-otp";
 import { generateReferralCode } from "../../utils/generate-referral";
 
-// Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -19,7 +18,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Send OTP email
 const sendOtpEmail = async (email: string, otp: string) => {
   const mailOptions = {
     from: "caaryan877@gmail.com",
@@ -39,12 +37,12 @@ const sendOtpEmail = async (email: string, otp: string) => {
   return await transporter.sendMail(mailOptions);
 };
 
-// Generate JWT token
+
 const generateToken = (userId: string): string => {
   return jwt.sign({ id: userId }, JWT_SECRET as string, { expiresIn: "24h" });
 };
 
-// Signup controller
+
 export const signup = async (
   req: Request,
   res: Response,
@@ -54,7 +52,7 @@ export const signup = async (
     const { fullName, email, password, field, profession, referedBy } =
       req.body;
 
-    // Check if user already exists
+   
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res
@@ -63,15 +61,14 @@ export const signup = async (
       return;
     }
 
-    // Generate unique referral code (6 digits mix of numbers and letters)
+    
     const referralCode = await generateReferralCode();
 
-    // Generate OTP
+   
     const otp = generateOTP();
     const otpExpiry = new Date();
-    otpExpiry.setMinutes(otpExpiry.getMinutes() + 10); // OTP valid for 10 minutes
-
-    // Create new user
+    otpExpiry.setMinutes(otpExpiry.getMinutes() + 10);
+  
     const newUser = new User({
       fullName,
       email,
@@ -84,15 +81,15 @@ export const signup = async (
       walletCoins: 0,
     });
 
-    // If referred by someone
+    
     if (referedBy) {
       const referrer = await User.findOne({ myreferalCode: referedBy });
       if (referrer) {
         newUser.referedBy = referedBy;
-        newUser.walletCoins = 5; // 5 coins bonus for being referred
+        newUser.walletCoins = 5; 
         newUser.coinsEarnedByReferal = 5;
 
-        // Update referrer's coins and referral count
+        
         await User.findByIdAndUpdate(referrer._id, {
           $inc: {
             walletCoins: 10,
@@ -111,10 +108,10 @@ export const signup = async (
       }
     }
 
-    // Save user to database
+   
     await newUser.save();
 
-    // Send OTP to user's email
+
     await sendOtpEmail(email, otp);
 
     res.status(200).json({
