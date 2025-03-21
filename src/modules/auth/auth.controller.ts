@@ -6,41 +6,15 @@ import nodemailer from "nodemailer";
 import { JWT_SECRET, EMAIL_CONFIG } from "../../config/config";
 import { generateOTP } from "../../utils/generate-otp";
 import { generateReferralCode } from "../../utils/generate-referral";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "caaryan877@gmail.com",
-    pass: `tmso tsng zfmk npri`,
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
-
-const sendOtpEmail = async (email: string, otp: string) => {
-  const mailOptions = {
-    from: "caaryan877@gmail.com",
-    to: email,
-    subject: "Account Verification OTP",
-    html: `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-        <h2>Account Verification</h2>
-        <p>Your OTP for account verification is:</p>
-        <h1 style="font-size: 32px; letter-spacing: 5px; font-weight: bold; color: #4A90E2; text-align: center; padding: 10px; background-color: #F8F9FA; border-radius: 5px;">${otp}</h1>
-        <p>This OTP is valid for 10 minutes.</p>
-        <p>If you didn't request this, please ignore this email.</p>
-      </div>
-    `,
-  };
-
-  return await transporter.sendMail(mailOptions);
-};
+import { generateToken } from "../../utils/generate-token";
+import { sendOtpEmail } from "../../utils/email";
 
 
-const generateToken = (userId: string): string => {
-  return jwt.sign({ id: userId }, JWT_SECRET as string, { expiresIn: "24h" });
-};
+
+
+
+
+
 
 
 export const signup = async (
@@ -52,7 +26,7 @@ export const signup = async (
     const { fullName, email, password, field, profession, referedBy } =
       req.body;
 
-   
+
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       res
@@ -61,14 +35,14 @@ export const signup = async (
       return;
     }
 
-    
+
     const referralCode = await generateReferralCode();
 
-   
+
     const otp = generateOTP();
     const otpExpiry = new Date();
     otpExpiry.setMinutes(otpExpiry.getMinutes() + 10);
-  
+
     const newUser = new User({
       fullName,
       email,
@@ -81,15 +55,15 @@ export const signup = async (
       walletCoins: 0,
     });
 
-    
+
     if (referedBy) {
       const referrer = await User.findOne({ myreferalCode: referedBy });
       if (referrer) {
         newUser.referedBy = referedBy;
-        newUser.walletCoins = 5; 
+        newUser.walletCoins = 5;
         newUser.coinsEarnedByReferal = 5;
 
-        
+
         await User.findByIdAndUpdate(referrer._id, {
           $inc: {
             walletCoins: 10,
@@ -108,7 +82,7 @@ export const signup = async (
       }
     }
 
-   
+
     await newUser.save();
 
 

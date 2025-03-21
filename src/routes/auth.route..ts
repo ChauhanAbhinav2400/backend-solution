@@ -11,7 +11,7 @@ import {
   resendOTP,
 } from "../modules/auth/auth.controller";
 import { authMiddleware } from "../middlewares/auth";
-// import { upload } from "../middlewares/uploadMiddleware";
+
 
 const router = express.Router();
 
@@ -23,12 +23,10 @@ router.post("/verify-forgot-password-otp", verifyForgotPasswordOTP);
 router.post("/change-password", changePassword);
 router.post("/resend-otp", resendOTP);
 
-// Protected routes
 router.get("/profile", authMiddleware, getProfile);
 router.put(
   "/profile",
   authMiddleware,
-  // upload.single("profilePicture"),
   updateProfile
 );
 
