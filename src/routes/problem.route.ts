@@ -13,8 +13,8 @@ import {
   commentOnProblem,
   getProblemComments,
   getTopProblems,
-} from "../controllers/problemController";
-import { authMiddleware } from "../middlewares/authMiddleware";
+} from "../modules/problem/problem.controller";
+import { authMiddleware } from "../middlewares/auth";
 
 const router = express.Router();
 

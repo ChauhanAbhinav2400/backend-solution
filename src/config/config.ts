@@ -1,16 +1,14 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-export const PORT = process.env.PORT || 5000;
-export const MONGODB_URI =
-  process.env.MONGODB_URI ||
-  "mongodb+srv://caaryan877:Radharani%40123@challenge2solution.95o30.mongodb.net/";
-export const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
+export const PORT = process.env.PORT
+export const MONGODB_URI = process.env.MONGODB_URI
+export const JWT_SECRET = process.env.JWT_SECRET
 export const AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
 export const AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 export const AWS_BUCKET_NAME = process.env.AWS_BUCKET_NAME;
-export const AWS_REGION = process.env.AWS_REGION || "us-east-1";
+export const AWS_REGION = process.env.AWS_REGION
 export const EMAIL_CONFIG = {
-  user: process.env.EMAIL_USER || "caaryan877@gmail.com",
-  pass: process.env.EMAIL_PASS || "tmso tsng zfmk npri",
+  user: process.env.EMAIL_USER,
+  pass: process.env.EMAIL_PASS
 };

@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/config";
 
-// Extend Request interface to include userId
 declare global {
   namespace Express {
     interface Request {
@@ -29,7 +28,7 @@ export const authMiddleware = async (
 
     try {
       // Verify token
-      const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
+      const decoded = jwt.verify(token, JWT_SECRET as string) as { id: string }
       req.userId = decoded.id;
       next();
     } catch (error) {

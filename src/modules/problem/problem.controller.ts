@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import Problem from "../models/problem-model";
-import User from "../models/user-model";
-import Comment from "../models/comment-model";
-import { canPostProblemToday, updateProblemScore } from "../helpers/utils";
+import Problem from "../../models/problem-model";
+import User from "../../models/user-model";
+import Comment from "../../models/comment-model";
+
 import mongoose from "mongoose";
+import { canPostProblemToday } from "../../utils/problem.helper";
 
 export const createProblem = async (
   req: Request,
