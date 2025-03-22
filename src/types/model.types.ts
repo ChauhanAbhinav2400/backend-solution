@@ -49,3 +49,13 @@ export interface IComment extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+export interface IChallenge extends Document {
+  title: string;
+  description: string;
+  category: string;
+  user: mongoose.Types.ObjectId;
+  price: number;
+  createdAt: Date;
+  updatedAt: Date;
+
+}

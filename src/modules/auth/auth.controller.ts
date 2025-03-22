@@ -1,9 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import User from "../../models/user-model";
-import jwt from "jsonwebtoken";
-import nodemailer from "nodemailer";
-
-import { JWT_SECRET, EMAIL_CONFIG } from "../../config/config";
 import { generateOTP } from "../../utils/generate-otp";
 import { generateReferralCode } from "../../utils/generate-referral";
 import { generateToken } from "../../utils/generate-token";
@@ -97,14 +93,10 @@ export const signup = async (
       },
     });
   } catch (error: any) {
-    console.error("Signup error:", error);
-    res
-      .status(500)
-      .json({ success: false, message: "Server error", error: error.message });
+    next(error)
   }
 };
 
-// Verify OTP controller
 export const verifyOTP = async (
   req: Request,
   res: Response,
@@ -113,26 +105,24 @@ export const verifyOTP = async (
   try {
     const { email, otp } = req.body;
 
-    // Find user by email
     const user = await User.findOne({ email });
     if (!user) {
       res.status(404).json({ success: false, message: "User not found" });
       return;
     }
 
-    // Check if OTP is valid
     if (user.otp !== otp) {
       res.status(400).json({ success: false, message: "Invalid OTP" });
       return;
     }
 
-    // Check if OTP has expired
+ 
     if (user.otpExpiry && user.otpExpiry < new Date()) {
       res.status(400).json({ success: false, message: "OTP has expired" });
       return;
     }
 
-    // Mark user as verified
+   
     user.isVerified = true;
     user.otp = undefined;
     user.otpExpiry = undefined;
